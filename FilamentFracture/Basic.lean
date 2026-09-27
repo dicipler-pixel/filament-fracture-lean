@@ -52,7 +52,16 @@ set_option maxHeartbeats 4000000 in
 theorem K5_charpoly (a b h c1 c2 μ γ d1 q1 q2 d2 x : ℝ) :
     (x • (1 : Matrix (Fin 5) (Fin 5) ℝ) - K5 a b h c1 c2 μ γ d1 q1 q2 d2).det =
       ((x - b) ^ 2 - μ * γ) * (x - a) * ((x - d1) * (x - d2) - q1 * q2) := by
-  simp [K5, det_succ_row_zero, Fin.sum_univ_succ, Matrix.submatrix]
+  have e : x • (1 : Matrix (Fin 5) (Fin 5) ℝ) - K5 a b h c1 c2 μ γ d1 q1 q2 d2 =
+      !![x - a, 0, 0, 0, 0;
+         -h, x - b, -c1, -c2, -μ;
+         0, 0, x - d1, -q1, 0;
+         0, 0, -q2, x - d2, 0;
+         0, -γ, 0, 0, x - b] := by
+    ext i j
+    fin_cases i <;> fin_cases j <;> simp [K5, Matrix.one_apply]
+  rw [e]
+  simp [det_succ_row_zero, Fin.sum_univ_succ, Matrix.submatrix]
   ring
 
 /-! ## Section 3: resolvent and pseudospectrum -/
