@@ -46,6 +46,48 @@ theorem K5_jordan_chain (a b h c1 c2 μ d1 q1 q2 d2 : ℝ) :
   constructor <;> ext i <;> fin_cases i <;>
     simp [K5, sub_mulVec, mulVec, dotProduct, Fin.sum_univ_succ, Pi.single_apply]
 
+/-- Small `Fin.succAbove` values, for expanding determinants by hand. -/
+private theorem sa_2_0_0 : Fin.succAbove (0 : Fin 2) (0 : Fin 1) = 1 := by decide
+private theorem sa_2_1_0 : Fin.succAbove (1 : Fin 2) (0 : Fin 1) = 0 := by decide
+private theorem sa_3_0_0 : Fin.succAbove (0 : Fin 3) (0 : Fin 2) = 1 := by decide
+private theorem sa_3_0_1 : Fin.succAbove (0 : Fin 3) (1 : Fin 2) = 2 := by decide
+private theorem sa_3_1_0 : Fin.succAbove (1 : Fin 3) (0 : Fin 2) = 0 := by decide
+private theorem sa_3_1_1 : Fin.succAbove (1 : Fin 3) (1 : Fin 2) = 2 := by decide
+private theorem sa_3_2_0 : Fin.succAbove (2 : Fin 3) (0 : Fin 2) = 0 := by decide
+private theorem sa_3_2_1 : Fin.succAbove (2 : Fin 3) (1 : Fin 2) = 1 := by decide
+private theorem sa_4_0_0 : Fin.succAbove (0 : Fin 4) (0 : Fin 3) = 1 := by decide
+private theorem sa_4_0_1 : Fin.succAbove (0 : Fin 4) (1 : Fin 3) = 2 := by decide
+private theorem sa_4_0_2 : Fin.succAbove (0 : Fin 4) (2 : Fin 3) = 3 := by decide
+private theorem sa_4_1_0 : Fin.succAbove (1 : Fin 4) (0 : Fin 3) = 0 := by decide
+private theorem sa_4_1_1 : Fin.succAbove (1 : Fin 4) (1 : Fin 3) = 2 := by decide
+private theorem sa_4_1_2 : Fin.succAbove (1 : Fin 4) (2 : Fin 3) = 3 := by decide
+private theorem sa_4_2_0 : Fin.succAbove (2 : Fin 4) (0 : Fin 3) = 0 := by decide
+private theorem sa_4_2_1 : Fin.succAbove (2 : Fin 4) (1 : Fin 3) = 1 := by decide
+private theorem sa_4_2_2 : Fin.succAbove (2 : Fin 4) (2 : Fin 3) = 3 := by decide
+private theorem sa_4_3_0 : Fin.succAbove (3 : Fin 4) (0 : Fin 3) = 0 := by decide
+private theorem sa_4_3_1 : Fin.succAbove (3 : Fin 4) (1 : Fin 3) = 1 := by decide
+private theorem sa_4_3_2 : Fin.succAbove (3 : Fin 4) (2 : Fin 3) = 2 := by decide
+private theorem sa_5_0_0 : Fin.succAbove (0 : Fin 5) (0 : Fin 4) = 1 := by decide
+private theorem sa_5_0_1 : Fin.succAbove (0 : Fin 5) (1 : Fin 4) = 2 := by decide
+private theorem sa_5_0_2 : Fin.succAbove (0 : Fin 5) (2 : Fin 4) = 3 := by decide
+private theorem sa_5_0_3 : Fin.succAbove (0 : Fin 5) (3 : Fin 4) = 4 := by decide
+private theorem sa_5_1_0 : Fin.succAbove (1 : Fin 5) (0 : Fin 4) = 0 := by decide
+private theorem sa_5_1_1 : Fin.succAbove (1 : Fin 5) (1 : Fin 4) = 2 := by decide
+private theorem sa_5_1_2 : Fin.succAbove (1 : Fin 5) (2 : Fin 4) = 3 := by decide
+private theorem sa_5_1_3 : Fin.succAbove (1 : Fin 5) (3 : Fin 4) = 4 := by decide
+private theorem sa_5_2_0 : Fin.succAbove (2 : Fin 5) (0 : Fin 4) = 0 := by decide
+private theorem sa_5_2_1 : Fin.succAbove (2 : Fin 5) (1 : Fin 4) = 1 := by decide
+private theorem sa_5_2_2 : Fin.succAbove (2 : Fin 5) (2 : Fin 4) = 3 := by decide
+private theorem sa_5_2_3 : Fin.succAbove (2 : Fin 5) (3 : Fin 4) = 4 := by decide
+private theorem sa_5_3_0 : Fin.succAbove (3 : Fin 5) (0 : Fin 4) = 0 := by decide
+private theorem sa_5_3_1 : Fin.succAbove (3 : Fin 5) (1 : Fin 4) = 1 := by decide
+private theorem sa_5_3_2 : Fin.succAbove (3 : Fin 5) (2 : Fin 4) = 2 := by decide
+private theorem sa_5_3_3 : Fin.succAbove (3 : Fin 5) (3 : Fin 4) = 4 := by decide
+private theorem sa_5_4_0 : Fin.succAbove (4 : Fin 5) (0 : Fin 4) = 0 := by decide
+private theorem sa_5_4_1 : Fin.succAbove (4 : Fin 5) (1 : Fin 4) = 1 := by decide
+private theorem sa_5_4_2 : Fin.succAbove (4 : Fin 5) (2 : Fin 4) = 2 := by decide
+private theorem sa_5_4_3 : Fin.succAbove (4 : Fin 5) (3 : Fin 4) = 3 := by decide
+
 set_option maxRecDepth 20000 in
 set_option maxHeartbeats 4000000 in
 /-- **Theorem 1, factorisation.** `det(λI − K₅) = [(λ−b)² − μγ](λ − a)det(λI − B)`. -/
@@ -61,7 +103,9 @@ theorem K5_charpoly (a b h c1 c2 μ γ d1 q1 q2 d2 x : ℝ) :
     ext i j
     fin_cases i <;> fin_cases j <;> simp [K5, Matrix.one_apply]
   rw [e]
-  simp [det_succ_row_zero, Fin.sum_univ_succ, Fin.succAbove, Fin.lt_def]
+  simp only [det_succ_row_zero, Fin.sum_univ_succ, Fin.sum_univ_zero, submatrix_apply,
+    sa_2_0_0, sa_2_1_0, sa_3_0_0, sa_3_0_1, sa_3_1_0, sa_3_1_1, sa_3_2_0, sa_3_2_1, sa_4_0_0, sa_4_0_1, sa_4_0_2, sa_4_1_0, sa_4_1_1, sa_4_1_2, sa_4_2_0, sa_4_2_1, sa_4_2_2, sa_4_3_0, sa_4_3_1, sa_4_3_2, sa_5_0_0, sa_5_0_1, sa_5_0_2, sa_5_0_3, sa_5_1_0, sa_5_1_1, sa_5_1_2, sa_5_1_3, sa_5_2_0, sa_5_2_1, sa_5_2_2, sa_5_2_3, sa_5_3_0, sa_5_3_1, sa_5_3_2, sa_5_3_3, sa_5_4_0, sa_5_4_1, sa_5_4_2, sa_5_4_3]
+  simp
   ring
 
 /-! ## Section 3: resolvent and pseudospectrum -/
