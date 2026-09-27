@@ -1,0 +1,1 @@
+{"modules":[{"module":"FilamentFracture.Basic","path":"FilamentFracture/Basic.lean"}],"expected_theorems":14,"expected_false_controls":3,"root_imports":["FilamentFracture.Basic"]}
