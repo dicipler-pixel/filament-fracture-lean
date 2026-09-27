@@ -61,7 +61,7 @@ theorem K5_charpoly (a b h c1 c2 μ γ d1 q1 q2 d2 x : ℝ) :
     ext i j
     fin_cases i <;> fin_cases j <;> simp [K5, Matrix.one_apply]
   rw [e]
-  simp [det_succ_row_zero, Fin.sum_univ_succ, Matrix.submatrix]
+  simp [det_succ_row_zero, Fin.sum_univ_succ, Fin.succAbove, Fin.lt_def]
   ring
 
 /-! ## Section 3: resolvent and pseudospectrum -/
