@@ -46,12 +46,13 @@ theorem K5_jordan_chain (a b h c1 c2 μ d1 q1 q2 d2 : ℝ) :
   constructor <;> ext i <;> fin_cases i <;>
     simp [K5, sub_mulVec, mulVec, dotProduct, Fin.sum_univ_succ, Pi.single_apply]
 
+set_option maxRecDepth 20000 in
+set_option maxHeartbeats 4000000 in
 /-- **Theorem 1, factorisation.** `det(λI − K₅) = [(λ−b)² − μγ](λ − a)det(λI − B)`. -/
 theorem K5_charpoly (a b h c1 c2 μ γ d1 q1 q2 d2 x : ℝ) :
     (x • (1 : Matrix (Fin 5) (Fin 5) ℝ) - K5 a b h c1 c2 μ γ d1 q1 q2 d2).det =
       ((x - b) ^ 2 - μ * γ) * (x - a) * ((x - d1) * (x - d2) - q1 * q2) := by
-  rw [det_succ_row_zero]
-  simp [K5, Fin.sum_univ_succ, det_succ_row_zero, Fin.succAbove, Fin.lt_def]
+  simp [K5, det_succ_row_zero, Fin.sum_univ_succ, Matrix.submatrix]
   ring
 
 /-! ## Section 3: resolvent and pseudospectrum -/
@@ -140,7 +141,7 @@ theorem growth_iff (b m : ℝ) (hb : 0 < b) (hm : 0 ≤ m) :
     have hm' : 0 < m := by linarith
     -- arsinh x / x → 1 as x → 0⁺, and 2b/m < 1
     have hd := hasDerivAt_iff_tendsto_slope.mp (Real.hasDerivAt_arsinh (0 : ℝ))
-    simp only [sq, mul_zero, add_zero, Real.sqrt_one, div_one] at hd
+    simp only [sq, mul_zero, add_zero, Real.sqrt_one, inv_one] at hd
     have hc : 2 * b / m < 1 := by rw [div_lt_one hm']; exact hbm
     have hev : ∀ᶠ x in 𝓝[≠] (0 : ℝ), 2 * b / m < slope arsinh 0 x :=
       hd.eventually (lt_mem_nhds hc)
