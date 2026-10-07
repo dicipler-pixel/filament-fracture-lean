@@ -6,12 +6,12 @@ the exact results of Revision 3/4, Secs. 2–5.
 * Theorem 1: `V = span{e₂, e₅}` is invariant under `K₅(γ)`, with restriction
   `J_γ = [[b, μ], [γ, b]]`; at `γ = 0` it carries a length-two Jordan chain at `b`; and
   `det(λI − K₅) = [(λ−b)² − μγ](λ − a) det(λI − B)`.
-* Sec. 3: the resolvent of `J = [[b, μ], [0, b]]` is `[[z⁻¹, μz⁻²], [0, z⁻¹]]`; its norm equals
-  `1/ε` exactly on the circle `|z|² = ε|μ| + ε²`, so the pseudospectrum is a disk; and
-  `ε_crit = (√(μ² + 4b²) − |μ|)/2` satisfies `ε_crit · σ_max = b²` (it is `σ_min(J)`), with
-  `ε_crit = (√2 − 1)b` at `|μ| = 2b`.
-* Theorem 2: `(√(4 + s²) + s)/2` is the top singular value of `[[1, −s], [0, 1]]` (its square
-  solves the Gram characteristic equation), and with
+* Sec. 3: the resolvent of `J = [[b, μ], [0, b]]` is `[[z⁻¹, μz⁻²], [0, z⁻¹]]`; its closed-form
+  norm equals `1/ε` exactly on the circle `|z|² = ε|μ| + ε²`; and
+  `ε_crit = (√(μ² + 4b²) − |μ|)/2` satisfies `ε_crit · σ_max = b²`, which identifies it as
+  `σ_min(J)` (singular values are not formalized), with `ε_crit = (√2 − 1)b` at `|μ| = 2b`.
+* Theorem 2: for `s ≥ 0`, `(√(4 + s²) + s)/2` is the top singular value of `[[1, −s], [0, 1]]`;
+  Lean proves that its square solves the Gram characteristic equation. With
   `M(t) = e^{−bt}(√(4 + μ²t²) + |μ|t)/2` there is `t > 0` with `M(t) > 1` iff `|μ| > 2b`.
 * Proposition 3: the diagonal-detuning eigenvector `(−μ, δ)` and the reverse-coupling
   eigenvectors `(1, ±√(γ/μ))` with eigenvalues `b ± √(μγ)`.
@@ -118,10 +118,11 @@ theorem resolvent (μ z : ℂ) (hz : z ≠ 0) :
   fin_cases i <;> fin_cases j <;> simp [Matrix.mul_apply, Fin.sum_univ_two] <;> field_simp <;>
     ring
 
-/-- The resolvent norm `(√(4ρ² + m²) + m)/(2ρ²)` at `|z| = ρ`, `|μ| = m`. -/
+/-- The resolvent norm at `|z| = ρ`, `|μ| = m`, defined by its closed form
+`(√(4ρ² + m²) + m)/(2ρ²)`. Its identification with the operator norm is not formalized. -/
 noncomputable def resNorm (m ρ : ℝ) : ℝ := (√(4 * ρ ^ 2 + m ^ 2) + m) / (2 * ρ ^ 2)
 
-/-- **The exact disk.** On `ρ² = εm + ε²` the resolvent norm is exactly `1/ε`. -/
+/-- **The exact circle.** On `ρ² = εm + ε²` the closed-form resolvent norm is exactly `1/ε`. -/
 theorem pseudospectral_circle (m ε ρ : ℝ) (hm : 0 ≤ m) (hε : 0 < ε)
     (hρ : ρ ^ 2 = ε * m + ε ^ 2) : resNorm m ρ = 1 / ε := by
   unfold resNorm
@@ -134,7 +135,8 @@ theorem pseudospectral_circle (m ε ρ : ℝ) (hm : 0 ≤ m) (hε : 0 < ε)
   ring
 
 /-- **The crossing threshold is `σ_min(J)`.** `ε_crit · σ_max = b²` with
-`σ_max = (√(μ² + 4b²) + |μ|)/2`, so `ε_crit = σ_min` since `σ_min σ_max = |det J| = b²`. -/
+`σ_max = (√(μ² + 4b²) + |μ|)/2`, so `ε_crit = σ_min` since `σ_min σ_max = |det J| = b²`.
+Lean proves the product identity; the singular values of `J` are not formalized. -/
 theorem eps_crit_sigma_min (m b : ℝ) :
     (√(m ^ 2 + 4 * b ^ 2) - m) / 2 * ((√(m ^ 2 + 4 * b ^ 2) + m) / 2) = b ^ 2 := by
   have h := Real.sq_sqrt (show 0 ≤ m ^ 2 + 4 * b ^ 2 by positivity)
@@ -150,7 +152,9 @@ theorem eps_crit_at_two (b : ℝ) (hb : 0 ≤ b) :
 /-! ## Theorem 2: exact transient growth -/
 
 /-- **The top singular value.** `σ = (√(4+s²)+s)/2` satisfies `σ⁴ − (2+s²)σ² + 1 = 0`, the
-characteristic equation of the Gram matrix `[[1, −s], [−s, 1+s²]]` of `[[1, −s], [0, 1]]`. -/
+characteristic equation of the Gram matrix `[[1, −s], [−s, 1+s²]]` of `[[1, −s], [0, 1]]`.
+For `s ≥ 0` this is the larger root, so `σ` is the top singular value; that comparison is not
+formalized, and for `s < 0` it is the smaller root. -/
 theorem top_singular (s : ℝ) :
     let σ := (√(4 + s ^ 2) + s) / 2
     (σ ^ 2) ^ 2 - (2 + s ^ 2) * σ ^ 2 + 1 = 0 := by

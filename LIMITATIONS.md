@@ -8,6 +8,13 @@ Lean proves exactly the statements written, under exactly the hypotheses written
   of `e^{−Jt}` is supported by `top_singular`, but the full operator-norm computation is not
   formalized. The peak time `t*`, `M_max`, and the interface-impulse threshold
   `κ_r = 2.4852…` are not formalized.
+* `resNorm` is defined by its closed form. Its identification with the operator norm of the
+  resolvent, and the monotonicity in `|z|` that makes each pseudospectrum a disk, are not
+  formalized. `pseudospectral_circle` proves that the closed form equals `1/ε` on the circle.
+* Singular values are not formalized. `top_singular` proves only that `σ²` solves the Gram
+  characteristic equation (for `s ≥ 0` it is the larger root, for `s < 0` the smaller), and
+  `eps_crit_sigma_min` proves only the product identity `ε_crit · σ_max = b²` with `σ_max`
+  written in closed form.
 * The Riesz and Grassmannian construction (Sec. 6), the continuum projection (Sec. 7), the heat
   trace (Sec. 8), the colour-shift hypothesis (Sec. 9) and every statement about the Snake
   filament are outside these proofs. The paper grades them [C] or [H].

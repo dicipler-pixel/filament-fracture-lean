@@ -20,8 +20,9 @@ Jeromie Beasley
 
 A five-dimensional operator can have every eigenvalue safely stable and still amplify a
 disturbance, because it carries an exact Jordan block on an invariant two-dimensional interface
-subspace. This repository proves the embedding, the factorised spectrum, the exact disk-shaped
-pseudospectrum, and the threshold `|μ| > 2b` for transient growth.
+subspace. This repository proves the embedding, the factorised characteristic polynomial, the
+closed-form resolvent norm equal to `1/ε` on the circle `|z|² = ε|μ| + ε²`, and the threshold
+`|μ| > 2b` for transient growth of the closed-form gain `M(t)`.
 
 ## What is proved
 
@@ -31,10 +32,10 @@ pseudospectrum, and the threshold `|μ| > 2b` for transient growth.
 | Theorem 1 | At `γ = 0`, `(K₅ − b)e₂ = 0` and `(K₅ − b)e₅ = μe₂`: a length-two Jordan chain | `K5_jordan_chain` |
 | Theorem 1 | `det(λI − K₅) = [(λ−b)² − μγ](λ − a)det(λI − B)` | `K5_charpoly` |
 | Sec. 3 | The resolvent of `J` is `[[z⁻¹, μz⁻²], [0, z⁻¹]]` | `resolvent` |
-| Sec. 3 | The resolvent norm is exactly `1/ε` on `|z|² = ε|μ| + ε²`, so the pseudospectrum is a disk | `pseudospectral_circle` |
-| Sec. 3 | `ε_crit = (√(μ²+4b²) − |μ|)/2` is `σ_min(J)`; at `|μ| = 2b` it is `(√2 − 1)b` | `eps_crit_sigma_min`, `eps_crit_at_two` |
-| Theorem 2 | `(√(4+s²)+s)/2` is the top singular value of `[[1,−s],[0,1]]` | `top_singular` |
-| Theorem 2 | `M(t) = exp(−bt + arsinh(|μ|t/2))`, and some `t > 0` has `M(t) > 1` iff `|μ| > 2b` | `half_sqrt`, `gain_eq`, `arsinh_le_self`, `growth_iff` |
+| Sec. 3 | The closed-form resolvent norm `(√(4ρ² + m²) + m)/(2ρ²)` (`ρ = \|z\|`, `m = \|μ\|`) equals `1/ε` exactly on the circle `ρ² = εm + ε²` | `pseudospectral_circle` |
+| Sec. 3 | `ε_crit = (√(μ²+4b²) − \|μ\|)/2` satisfies `ε_crit · (√(μ²+4b²) + \|μ\|)/2 = b²`, which identifies it as `σ_min(J)` given `σ_max(J) = (√(μ²+4b²) + \|μ\|)/2` and `σ_min σ_max = b²` (singular values not formalized); at `\|μ\| = 2b` it is `(√2 − 1)b` | `eps_crit_sigma_min`, `eps_crit_at_two` |
+| Theorem 2 | `σ = (√(4+s²)+s)/2` satisfies `σ⁴ − (2+s²)σ² + 1 = 0`, the characteristic equation of the Gram matrix of `[[1,−s],[0,1]]`; for `s ≥ 0` this is the top singular value (that it is the larger root is not formalized) | `top_singular` |
+| Theorem 2 | `M(t) = exp(−bt + arsinh(\|μ\|t/2))`, and some `t > 0` has `M(t) > 1` iff `\|μ\| > 2b` | `half_sqrt`, `gain_eq`, `arsinh_le_self`, `growth_iff` |
 | Prop. 3 | Diagonal detuning: eigenvector `(−μ, δ)` (linear path); reverse coupling: eigenvectors `(1, ±√(γ/μ))` for `b ± √(μγ)` (square-root path) | `detuning_eigen`, `reverse_eigen` |
 
 The file is [`FilamentFracture/Basic.lean`](FilamentFracture/Basic.lean). What is not proved is
