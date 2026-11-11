@@ -4,7 +4,7 @@
 
 [![Lean proof check](https://github.com/dicipler-pixel/filament-fracture-lean/actions/workflows/build.yml/badge.svg)](https://github.com/dicipler-pixel/filament-fracture-lean/actions/workflows/build.yml)
 ![Lean](https://img.shields.io/badge/Lean-v4.34.1-blue)
-![Theorems](https://img.shields.io/badge/theorems-26-2EA043)
+![Theorems](https://img.shields.io/badge/theorems-27-2EA043)
 ![sorry](https://img.shields.io/badge/sorry-0-2EA043)
 ![Code: MIT](https://img.shields.io/badge/code-MIT-lightgrey)
 ![Text: CC BY 4.0](https://img.shields.io/badge/text-CC%20BY%204.0-lightgrey)
@@ -59,7 +59,7 @@ general `γ`.
 | each pseudospectrum is a disk: `resNorm m ρ < 1/ε ↔ εm + ε² < ρ²`, and `resNorm m ·` is strictly decreasing in `ρ` | `resNorm_lt_iff`, `resNorm_strictAntiOn` |
 | `‖J‖ = (√(m²+4b²)+\|m\|)/2` and `‖J⁻¹‖ = 1/ε_crit`, so `ε_crit = 1/‖J⁻¹‖` is the least singular value | `opNorm_J`, `opNorm_J_inv` |
 | `M(t) = ‖e^{−tJ}‖` for `t ≥ 0` — the gain is the semigroup norm | `gain_opNorm` |
-| the gain is maximised at `t* = √(m²−4b²)/(mb)` when `m > 2b > 0` | `gain_peak` |
+| the gain is maximised at `t* = √(m²−4b²)/(mb)` when `m > 2b > 0`, with peak value `M_max = ((m + √(m²−4b²))/(2b))·exp(−√(m²−4b²)/m)` — the paper's (4.2) | `gain_peak`, `gain_max` |
 | `‖e^{−tJ_γ}‖ ≤ ‖e^{−tK₅(γ)}‖` for every `γ`: the whole operator amplifies at least as much as the interface it contains | `semigroup_bound` |
 
 Composed with the theorems of `Basic.lean` these give the paper's claims rather than paraphrases

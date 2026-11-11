@@ -1220,4 +1220,39 @@ theorem gain_peak (b m : ℝ) (hb : 0 < b) (hm : 2 * b < m) :
 
 end Peak
 
+/-! ### PeakValue -/
+
+section PeakValue
+open Real
+
+theorem gain_max (b m : ℝ) (hb : 0 < b) (hm : 2 * b < m) :
+    gain b m (Real.sqrt (m ^ 2 - 4 * b ^ 2) / (m * b)) =
+      ((m + Real.sqrt (m ^ 2 - 4 * b ^ 2)) / (2 * b)) *
+        Real.exp (-(Real.sqrt (m ^ 2 - 4 * b ^ 2)) / m) := by
+  have hm_pos : 0 < m := by linarith
+  have hm_ne : m ≠ 0 := ne_of_gt hm_pos
+  have hb_ne : b ≠ 0 := ne_of_gt hb
+  have hd : 0 ≤ m ^ 2 - 4 * b ^ 2 := by nlinarith
+  have hsq : Real.sqrt (m ^ 2 - 4 * b ^ 2) ^ 2 = m ^ 2 - 4 * b ^ 2 := Real.sq_sqrt hd
+  -- the two scalar identities at the peak time
+  have hmt : m * (Real.sqrt (m ^ 2 - 4 * b ^ 2) / (m * b))
+      = Real.sqrt (m ^ 2 - 4 * b ^ 2) / b := by
+    field_simp
+  have hbt : b * (Real.sqrt (m ^ 2 - 4 * b ^ 2) / (m * b))
+      = Real.sqrt (m ^ 2 - 4 * b ^ 2) / m := by
+    field_simp
+  -- 4 + (mt*)² = (m/b)², so the square root is m/b
+  have hsqrt : Real.sqrt (4 + (m * (Real.sqrt (m ^ 2 - 4 * b ^ 2) / (m * b))) ^ 2) = m / b := by
+    rw [hmt]
+    have h1 : 4 + (Real.sqrt (m ^ 2 - 4 * b ^ 2) / b) ^ 2 = (m / b) ^ 2 := by
+      field_simp
+      nlinarith
+    rw [h1, Real.sqrt_sq (le_of_lt (by positivity : (0:ℝ) < m / b))]
+  unfold gain
+  rw [hbt, hsqrt]
+  field_simp
+
+
+end PeakValue
+
 end FilamentFracture
