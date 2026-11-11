@@ -9,4 +9,4 @@ rev = "v4.34.1"
 
 [[lean_lib]]
 name = "FilamentFracture"
-roots = ["FilamentFracture.Basic"]
+roots = ["FilamentFracture.Basic", "FilamentFracture.OperatorNorm"]
